@@ -1,0 +1,18 @@
+To build the network, the Keras API was used. Keras is a deep learning API written in Python, running on the TensorFlow machine learning platform.\\~\\
+The network model was based on data processing through the Deep Learning process. Algorithms are based on processing and collection
+data using multiple neurons, where each of them receives information, processes it and output a result. Specifically multiply each of their inputs with the corresponding synaptic weight and calculate the total sum of the products. This sum is fed as an argument to one
+activation function, where each node implements internally. The value that the function takes for the said argument is also the output of the neuron for the current inputs and weights. \\~\\
+In this implementation, the Sequential model, provided by Keras, is used and is nothing other than a linear stack of layers, where each layer consists of neurons. Neurons from different layers are connected to each other, and with appropriate weights, depending on the type of layer used.\\~\\
+For image processing, which is required to solve the problem, convolutional layers and computational layers (Dense Layers, Pooling Layers, Flatten Layers) are used. The particular neurons process the information at each level and pass it on to the next. More specifically:
+\begin{itemize}
+\item Convolutional layers in each unit, neuron takes an image as an input, apply a filter(or kernel) to it and output the results to neurons of the next layer. Overall, each layer apply a series of several filters where they map onto the image and extract details from it. Such details may be edge detection, bright and dark areas, information where they help the network learn and operate on patterns. 
+\item Dense layers help to change the dimension of the input information, so that the model to be able to easily define the relationship between the data values on which it operates. These layers are usually used at the end of the model and take as an input, the output of Cl. Depending on the information, the output of each layer get the corresponding weights.
+\item Pooling layers are applied after the convolutional layer. The main purpose of pooling is to reduce the size of feature maps, which in turn make computation faster because the number of training parameters is reduced.
+\item Flatten layers are used to convert all the resultant 2-Dimensional arrays from pooled feature maps into a single long continuous linear vector. The flattened matrix is fed as an input to the fully connected layer to classify the image.
+\end{itemize}
+The following Python modules where used in order to implement the things mentioned before:
+\begin{itemize}
+  \item from sklearn.model\_selection import train\_test\_split
+  \item from keras.utils import to\_categorical
+  \item import tensorflow 
+\end{itemize}

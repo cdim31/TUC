@@ -1,0 +1,84 @@
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{titlesec} % for customizing section titles
+\usepackage{lipsum} % for dummy text
+\usepackage{graphicx, subfig} % for including images
+\usepackage{float} % for precise image placement with [H] option
+\usepackage{biblatex} % for bibliography
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{hyperref}
+
+% Title setup
+\title{\textbf{Autonomous Agents Report}}
+\author{Christos Dimas \\ AM : 2021030183}
+\date{April 17, 2024 \\~\\~\\~\\}
+% Section title formatting
+\titleformat{\section}
+{\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+% Begin document
+
+\begin{document}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/tuc_image.png}
+\end{figure}
+
+% Title
+\maketitle
+
+\begin{center}
+    \textbf{Project's topic}\\~\\
+    Agent Training to recognise Invasive Ductal Carcinoma (IDC), the most common subtype of all breast cancers, given breast histopathology images, with the use of Deep Learning
+\end{center}
+
+\newpage
+% Table of Contents
+\tableofcontents
+
+\newpage
+
+% Sections
+\section{Introduction}
+\input{Introduction.tex}
+
+\section{Data Management}
+\subsection{Visualization}
+\input{DataManagment/Visualization.tex}
+
+\subsection{Preprocessing}
+
+\input{DataManagment/Preprocessing.tex}
+
+\section{Agent}
+\subsection{Modules used}
+\input{Agent/ModulesUsed}
+\subsection{Optimizer}
+\input{Agent/Optimizer}
+\subsection{Model}
+\input{Agent/Model}
+
+\section{Agent Training}
+\subsection{Training process}
+\input{AgentTraining/TrainingProcess}
+\newpage
+\section{Agent Testing}
+\input{AgentTesting/TestingProcess}
+
+\section{Breast Cancer Detection}
+\subsection{App}
+\input{BreastCancerDetection/App}
+\subsection{Problems faced}
+\input{BreastCancerDetection/ProblemsFaced}
+\subsection{Conclusion}
+\input{BreastCancerDetection/Conclusion}
+
+\section{References}
+\input{Referances.tex}
+% References (if needed)
+\newpage
+\printbibliography
+
+\end{document}
