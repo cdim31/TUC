@@ -1,0 +1,12 @@
+*~
+*.o
+.depend
+.vscode
+mtask
+terminal
+bios_example*
+test_util
+tinyos_shell
+validate_api
+test_example
+doc/
