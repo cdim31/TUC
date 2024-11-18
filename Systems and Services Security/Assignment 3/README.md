@@ -6,6 +6,8 @@ Christos Dimas     - 2021030183
 
 This `README.md` serves as a lab report for the 3rd exercise, explaining the code implementation of Malware Detection tool.
 
+To run the scripts you need to create a python enviroment and install watchdog
+
 ## Main Description
 
 This is a Malware Detection tool in Python with signature-based scanning. It is contained of 3 Tasks. **Signature Database & Detection**, **Search & Quarantine** and **Real-Time Monitoring & Anomaly Detection**.
