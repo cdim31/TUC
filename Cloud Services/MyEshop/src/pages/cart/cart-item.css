@@ -1,0 +1,11 @@
+.stockWarning {
+    background-color: #ff0000; /* Light red background */
+    color: #000000 !important; /* Black text */
+    border: 1px solid #d8000c; /* Border matching the dark red color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding for spacing */
+    margin-top: 10px; /* Space above the warning */
+    font-weight: bold; /* Bold text */
+    text-align: center; /* Center the text */
+    font-size: 0.9rem; /* Slightly smaller font size */
+}

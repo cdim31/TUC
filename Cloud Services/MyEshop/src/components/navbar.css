@@ -1,0 +1,39 @@
+/* Navbar Styling */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #6d0ecd; /* Purple background */
+  padding: 10px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center; /* Center-aligns the links */
+  align-items: center;
+  transition: top 0.3s; /* Smooth transition for hiding/showing */
+}
+
+.navbar.hidden {
+  top: -100px; /* Hide navbar off-screen when scrolling down */
+}
+
+.navbar .links {
+  display: flex;
+  gap: 20px; /* Adds spacing between links */
+}
+
+.navbar a {
+  color: #000; /* Black text */
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1.2em;
+  transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+  background-color: #673def; /* Darker purple on hover for contrast */
+  color: #fff; /* White text on hover */
+  border-radius: 4px;
+}
+
+  

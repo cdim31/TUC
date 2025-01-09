@@ -1,0 +1,10 @@
+[{
+    "id": 1,
+    "product": 
+    "title": product.title,
+    "amount": product.amount,
+    "id": productsData.find((p) => p.id === product.title)?.productName || 'Unknown',
+    "total_price": totalPrice,
+    "status": "Success",
+}
+]

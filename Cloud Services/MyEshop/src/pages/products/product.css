@@ -1,0 +1,123 @@
+/* Container for the product list and search bar */
+.product-list-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 100px 20px 20px; /* Add 100px top padding to account for the navbar */
+}
+
+/* Search bar styling */
+.search-bar {
+    padding: 14px 24px;
+    margin: 80px 0 20px; /* Adds 80px top margin to push below navbar */
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    font-size: 1.2em;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: #222;
+    color: #f5f5f5;
+    outline: none;
+}
+
+.search-bar::placeholder {
+    color: #999;
+}
+
+.product-item .seller {
+    font-size: 1em;
+    color: #f0a500;
+    margin: 5px 0;
+  }
+  
+/* Product Grid Layout */
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row on large screens */
+    gap: 30px;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+    .products {
+        grid-template-columns: repeat(2, 1fr); /* 2 items per row on medium screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .products {
+        grid-template-columns: 1fr; /* 1 item per row on small screens */
+    }
+}
+
+/* Product card styling */
+.product {
+    background-color: #333;
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white;
+    max-width: 300px; /* Increased width */
+    margin: auto;
+}
+
+/* Product image styling */
+.product img {
+    width: 100%;
+    max-width: 180px; /* Increased size */
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+/* Description styling */
+.description {
+    margin-bottom: 15px;
+}
+
+.description p {
+    margin: 8px 0;
+    font-size: 1.1em; /* Increased font size */
+    color: #ddd;
+}
+
+.description p b {
+    font-size: 1.2em; /* Larger font for product name */
+}
+
+/* Availability text */
+.availability {
+    font-size: 1em;
+    color: #aaa;
+}
+
+/* Add to Cart button */
+.addToCartBttn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px; /* Increased padding for larger button */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 220px; /* Increased max width for larger button */
+    font-weight: bold;
+}
+
+.addToCartBttn:hover {
+    background-color: #45a049;
+}
+
+/* Error message styling */
+.error {
+    color: #e74c3c;
+    font-size: 1em; /* Slightly larger font */
+    margin-top: 10px;
+}

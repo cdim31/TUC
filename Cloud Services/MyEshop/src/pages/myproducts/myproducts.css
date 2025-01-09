@@ -1,0 +1,76 @@
+/* General Styling */
+.product-management {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    color: white;
+  }
+  
+  .add-product {
+    margin-bottom: 30px;
+  }
+  
+  /* Styling for input fields */
+  input[type="text"],
+  input[type="number"],
+  input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px 0;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #222;
+    color: white;
+  }
+  
+  /* Styling for buttons */
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Delete Button Styling */
+  button.delete-button {
+    background-color: #e74c3c;
+  }
+  
+  button.delete-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Product Grid Layout */
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .product-item {
+    background-color: #555;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .product-image {
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 100px;
+  }
+  

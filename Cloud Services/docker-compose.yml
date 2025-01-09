@@ -1,0 +1,222 @@
+# 1. Enter the bash: docker exec -it kafka bash
+# 2. Create a topic: 
+# kafka-topics --create \
+#   --bootstrap-server localhost:19092 \
+#   --replication-factor 1 \
+#   --partitions 1 \
+#   --topic order-topic
+# 3. Verify: kafka-topics --list --bootstrap-server localhost:19092
+# 4. Produce: kafka-console-producer --broker-list localhost:19092 --topic order-topic
+# 5. Consume: kafka-console-consumer --bootstrap-server localhost:19092 --topic order-topic --from-beginning
+
+
+services:
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.2.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - default
+      - kafka
+
+  kafka:
+    image: confluentinc/cp-kafka:7.2.1
+    container_name: kafka
+    ports:
+      - "8097:8097"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:8097,INTERNAL://kafka:19092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+    networks:
+      - default
+      - kafka
+      - pro_backend_network
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "ping", "-c", "1", "localhost:8097"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:latest
+    hostname: control-center
+    depends_on:
+      - kafka
+    ports:
+      - "9021:9021"
+    expose:
+      - 9021
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "kafka:19092"
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      PORT: 9021
+    networks:
+      - default
+      - kafka
+    restart: always
+
+  mysql-kc:
+    container_name: mysql-kc
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+    environment:
+      # The user, password and database that Keycloak
+      # is going to create and use
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: keycloak
+      MYSQL_DATABASE: keycloak
+      # Self-Explanatory
+      MYSQL_ROOT_PASSWORD: admin
+    volumes:
+      - ./data2/mysql-keycloak:/var/lib/mysql
+      - ./keycloak.sql:/docker-entrypoint-initdb.d/init.sql # Mount the SQL file
+    networks:
+      - keycloak-and-mysql-network
+
+  keycloak-w:
+    image: quay.io/keycloak/keycloak:26.0.5
+    ports:
+      - 8182:8080
+    restart: unless-stopped
+    command: start-dev #--http -port=8182
+    environment:
+      # User and password for the Administration Console
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: 35.207.127.84
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+      # KC_PROXY: edge
+      KC_DB: mysql
+      KC_DB_URL_HOST: mysql-kc
+      KC_DB_URL_PORT: 3306
+      # Same values as the mysql-kc service
+      KC_DB_SCHEMA: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KC_DB_URL_DATABASE: keycloak
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+
+    depends_on:
+      - mysql-kc
+    volumes:
+      - keycloak-realm-data:/opt/jboss/keycloak/standalone/data
+    networks:
+      - keycloak-and-mysql-network
+      - pro_backend_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: mysql-kc
+      MYSQL_ROOT_PASSWORD: admin
+    depends_on:
+      - mysql-kc
+    networks:
+      - keycloak-and-mysql-network
+
+  productdb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: productdb
+    networks:
+      - pro_backend_network
+    restart: always
+    volumes:
+      - productdb_data:/data/db
+
+  ordersdb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: ordersdb
+    networks:
+      - pro_backend_network
+    restart: always
+    volumes:
+      - ordersdb_data:/data/db
+
+  products-service:
+    build:
+      context: ./FlaskAPI
+    container_name: products_service
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - productdb
+    networks:
+      - pro_backend_network
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - productdb_data:/data/db
+      - ./uploads:/static/uploads  # Mount uploads folder to store images
+
+  orders-service:
+    build:
+      context: ./Order_service
+    container_name: orders_service
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - ordersdb
+    networks:
+      - pro_backend_network
+    restart: always
+    ports:
+      - "8081:8081"
+    volumes:
+      - ordersdb_data:/data/db
+      
+  frontend:
+    build:
+      context: ./MyEshop
+    env_file:
+      - ./MyEshop/URL.env
+    container_name: frontend_c
+    ports:
+      - "5173:5173"
+    networks:
+      - pro_backend_network
+    restart: always
+
+networks:
+  pro_backend_network:
+    driver: bridge
+  keycloak-and-mysql-network:
+  kafka:
+
+volumes:
+  productdb_data:
+  ordersdb_data:
+  mysql-keycloak:
+  keycloak-realm-data:

@@ -1,0 +1,92 @@
+/* Container styling for each order */
+.order {
+    border-radius: 15px;
+    width: 250px;
+    height: auto;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(153, 153, 153); /* Matches product background */
+    border: 1px solid #ddd; /* Light gray border */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px; /* Padding inside the order box */
+    transition: transform 0.3s ease; /* Smooth transform on hover */
+    text-align: center;
+}
+
+.orders {
+    max-width: 1200px;
+    margin: auto;
+    padding: 100px 20px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row on large screens */
+    gap: 30px;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+    .orders {
+        grid-template-columns: repeat(2, 1fr); /* 2 items per row on medium screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .orders {
+        grid-template-columns: 1fr; /* 1 item per row on small screens */
+    }
+}
+
+/* Order ID and price styling */
+.order p {
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0;
+}
+
+/* Bold styling for specific elements */
+.order p b {
+    font-size: 16px;
+    color: #000;
+}
+
+/* Heading for the products list */
+.order h3 {
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+/* Styling for each product in the list */
+.order ul {
+    list-style-type: none; /* Remove default bullet points */
+    padding: 0;
+    width: 100%;
+}
+
+.order ul li {
+    background-color: #f8f8f8; /* Light background for each product item */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* Styling for product details inside each list item */
+.order ul li p {
+    margin: 5px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+/* Status styling */
+.order p b.status {
+    color: #007bff; /* Customize this color to match status styling */
+}
+
+/* Hover effect to slightly enlarge the order box */
+.order:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
