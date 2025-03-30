@@ -2,6 +2,8 @@
 !!! My changes are the ones that are mentioned in the "handout (1).pdf" for the particular project !!!
 !!! I don't take the credits for anything more than the changes in the code that I made in order to complete the project's assignment !!!
 
+Grade: 10/10, made with @michalislamp
+
 TinyOS is a very small operating system, built on top of a simple-minded virtual machine, whose purpose is purely educational. It is not related in any way to the well-known operating system for wireless sensors, but since it was first conceived in 2003, there was a name collision that I have not yet resolved. This code (in its long history) has been used for many years to teach the Operating Systems course at the Technical University of Crete.
 
 In its current incarnation, tinyos supports a multicore preemptive scheduler, serial terminal devices, and a unix like process model. It does not support (yet) memory management, block devices, or network devices. These extensions are planned for the future.
