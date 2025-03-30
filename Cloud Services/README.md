@@ -1,4 +1,5 @@
 ### Semester Project for Cloud Services course
+## Grade 10/10
  This project is an implementation of a fully functional eshop using microservices, using Keycloak and Apache Kafka services. 
 
  As you can see here the Keycloak is not set up due to non compatibility of the data2 folder that keycloak uses for authentication.
