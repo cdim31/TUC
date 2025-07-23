@@ -1,0 +1,52 @@
+@defmacro my2pi (2*3.14159265)
+@defmacro myname "Chris"
+
+
+comp Circle:
+	#x, #y: scalar;
+	#radius: scalar;
+	def area() -> scalar: return 3.14 * (#radius ** 2); enddef;
+	def perimeter() -> scalar: return 2 * 3.14 * #radius; enddef;
+	def move(dx: scalar, dy: scalar): #x=#x+dx; #y=#y+dx; enddef;
+endcomp;
+
+def testMacros():
+
+    writeStr(myname);
+    piTimes2 = my2pi; 
+
+enddef;
+
+def totalArea(c[]: Circle, size: integer) -> scalar:
+    i: integer;
+    sum: scalar;
+    sum = 0;
+    for i in [0:size-1]:
+         sum = sum + c[i].area();
+    endfor;
+    return sum;
+enddef;
+
+const N = 100: integer;
+a[100]: integer;
+
+def main():
+    sum: scalar;   
+    for i in [0:N]:
+        a[i] = i;
+    endfor;
+
+    a := [i for i:100]:integer;
+   
+    testMacros();
+    
+    for i in [0:N]:
+        a[i] = i;
+    endfor;
+
+    half := [ x / 2 for x: integer in a of 100] : scalar;
+    
+    c: Circle;
+    sum = totalArea(c, 5);
+    writeStr(sum);    
+enddef;

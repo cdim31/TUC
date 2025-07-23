@@ -1,0 +1,61 @@
+const N = 5: integer;
+
+def find_code(name: str)->integer:
+	code: integer;
+	code = 0;
+	if (name == "Computation Theory"):
+		code = 402;
+	else:
+		code = 2025;
+	endif;
+	return code;
+enddef;
+
+def find_name(field: str, field_opt: integer)->str:
+	name: str;
+	name = "Not found";
+	if (field == "Software"):
+		if (field_opt == 1):
+			name = "Computation Theory";
+		endif;
+	else:
+		name = "Introduction to Quantum Computing";
+	endif;
+	
+	return name;
+enddef;
+
+def find_field(field_num: integer)->str:
+	name : str;
+	name = "Not found";
+	if (field_num == 1):
+		name = "Software";
+	endif;
+	if (field_num == 2):
+		name = "Hardware";
+	endif;
+	if (field_num == 3):
+		name = "Telecommunications";
+	endif; 
+	if (field_num == 4):
+		name = "Electrical";
+	endif;
+	return name;
+enddef;
+
+def main():
+	
+	field : str;
+	name : str;
+	code : integer;
+	field = find_field(1);
+	name = find_name(field, 1);
+	code = find_code(name);
+	printf("Full Name: %s, Code Name: %s%d", name, field, code);
+	return 0;
+enddef;
+
+
+
+
+

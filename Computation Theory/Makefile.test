@@ -1,0 +1,23 @@
+# Get all .c files in the current directory
+CFILES := $(wildcard out/*.c)
+
+# Create corresponding executables by stripping the .c extension
+EXECS := $(CFILES:.c=)
+
+# Compiler and flags
+CC := gcc
+CFLAGS := -Wall -Wextra -std=c11
+
+# Default rule
+all: $(EXECS)
+
+# Rule to compile each .c file into an executable
+%: %.c
+	@echo "Compiling $<..."
+	@$(CC) $(CFLAGS) $< -o $@ && echo "✔ $< compiled successfully" || echo "✖ Failed to compile $<"
+
+# Clean rule to remove generated executables
+clean:
+	rm -f $(EXECS)
+
+.PHONY: all clean
